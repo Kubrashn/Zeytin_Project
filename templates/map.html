@@ -1,0 +1,422 @@
+{% extends "index.html" %}
+{%load static %}
+
+{% block title %}
+<title>Map</title>
+{% endblock title %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock css %}
+
+{% block header %}
+{% include "includes/_navbar.html" %}
+{% endblock header %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4 ">
+            <div class="form">
+                <h4>Upload Photo</h4>
+                <form id="photoForm" enctype="multipart/form-data">
+                    <input type="file" id="photoInput" accept="image/*" name="image_data">
+                    <label for="latitude">Latitude:</label>
+                    <input type="text" id="latitude" name="latitude">
+                    <label for="longitude">Longitude:</label>
+                    <input type="text" id="longitude" name="longitude">
+                    <button type="submit">Kaydet</button>
+                </form>
+                
+                
+            </div>
+            
+
+            <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="konumBilgiOffcanvas"
+                aria-labelledby="konumBilgiOffcanvasLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="konumBilgiOffcanvasLabel">Konum Bilgileri</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div id="konumBilgiIcerik">
+                        <!-- Konum bilgileri burada görüntülenecek -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="distance">
+                <p>
+                    <button class="btn btn-danger d-inline-block" onclick="distance()" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false"
+                        aria-controls="collapseWidthExample">
+                        Distance
+                    </button>
+                </p>
+            </div>
+            <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                <div class="box d-flex">
+                    <p class="ms-3 mt-1">Distance (m): </p>
+                    <span id="length" class="ms-3 mt-1"></span>
+                </div>
+            </div>
+            <div id='map' style='width: 100%; height: 500px;'>
+                {% for img in frameimg %}
+                <div class="frameimg" id="img_{{ forloop.counter }}" data-image="{{ img.img.url }}"
+                    data-sout_latitude="{{ img.bounds_southwest_latitude }}"
+                    data-south_longitude="{{ img.bounds_southwest_longitude }}"
+                    data-north_latitude="{{ img.bounds_northeast_latitude }}"
+                    data-north_longitude="{{ img.bounds_northeast_longitude }}">
+                </div>
+                <img src="path/to/photo.jpg" data-photo-id="1" />
+
+                {% endfor %}
+
+            </div>
+            {% for konum in konumlar %}
+            <div class="konum" data-lat="{{ konum.lat }}" data-long="{{ konum.long }}" data-title="{{ konum.title }}"
+                data-address="{{ konum.address }}" data-content="{{ konum.content }}"></div>
+            {% endfor %}
+            {% for birlestirme in birlesmeler %}
+            <div class="birlestirme">
+                {% for bkonum in birlestirme.lat_long_values.all %}
+                <div class="bkonum" data-lat="{{ bkonum.lat }}" data-long="{{ bkonum.long }}"></div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <div class="img-container">
+                {{ img_html | safe }} <!-- Görselleştirilmiş harita görüntüsü -->
+            </div>
+            {% for photo in resimler %}
+            <div class="resimler" data-image="{{photo.image.url}}" data-gps_latitude="{{photo.gps_latitude}}"
+                data-gps_longitude="{{photo.gps_longitude}}"></div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="YuklemeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>{{photo.image}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img id="yuklenenresim" class="ms-3" width="450px" src="" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            </body>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    let map;
+    let infoWindow;
+    const bmarkerss = [];
+    const iconmarkers = [];
+    const iconSize = 14; // Ikon boyutunu ayarlayın
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12,
+            center: { lat: 41.015137, lng: 28.979530 },
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        // fetchAndAddPhotoOverlays(map);
+
+        // Varsayılan InfoWindow'u oluşturun ve hemen kapatın
+        infoWindow = new google.maps.InfoWindow();
+        infoWindow.close();
+
+        const konumlarDivs = $(".konum"); // Konum bilgilerini içeren divleri seç
+        let markers = [];
+
+
+
+        konumlarDivs.each(function () {
+            markers.push([$(this).data("lat"), $(this).data("long"), $(this).data("title"), $(this).data("address"), $(this).data("content")]);
+        });
+
+
+        // Yeni konumunuz için lat ve lng değerlerini güncelleyin
+        for (let i = 0; i < markers.length; i++) {
+            const newMarker = new google.maps.Marker({
+                position: { lat: markers[i][0], lng: markers[i][1] },
+                map: map,
+                label: "A",
+                title: markers[i][2],
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+            });
+
+            // Marker'a tıklanınca ilgili InfoWindow'u açın
+            google.maps.event.addListener(newMarker, 'click', function () {
+                // Yan taraftaki InfoWindow'u güncelleyin
+                infoWindow.setContent("<strong>Adres:</strong> " + markers[i][3] + "<br><strong>İçerik:</strong> " + markers[i][4]);
+                infoWindow.open(map, newMarker); // InfoWindow'u açın
+                $("#konumBilgiIcerik").html(infoWindow.getContent());
+                $("#konumBilgiOffcanvas").offcanvas('show');
+            });
+        }
+
+
+
+
+        const birlestirmeDivs = $(".birlestirme"); // Her bir "Birlestirme" nesnesini içeren divleri seç
+
+        birlestirmeDivs.each(function () {
+            const bmarkers = [];
+            const bkonumlarDivs = $(this).find(".bkonum");
+
+            bkonumlarDivs.each(function () {
+                bmarkers.push([$(this).data("lat"), $(this).data("long"),]);
+            });
+
+
+            const zoomThreshold = 13; // Ikonların görünmeye başlayacağı zoom seviyesi
+
+            for (var i = 0; i < bmarkers.length - 1; i++) {
+                var lineCoordinates = [new google.maps.LatLng(bmarkers[i][0], bmarkers[i][1]), new google.maps.LatLng(bmarkers[i + 1][0], bmarkers[i + 1][1])];
+                var line = new google.maps.Polyline({
+                    path: lineCoordinates,
+                    geodesic: true,
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2,
+                    map: map,
+                });
+
+
+
+                var marker = new google.maps.Marker({
+                    position: lineCoordinates[0], // İlk noktanın konumu
+                    map: map,
+                    icon: {
+                        url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAARVBMVEX//wCrqwCXlwCEhABycgBhYQBzcwCMjABjYwBAQACxsQAAAAAqKgAzMwA+PgBJSQBQUABnZwCSkgCmpgB+fgBrawB3dwDGRRtnAAABh0lEQVR4nO3dS07DQBAG4W57nId5hQS4/1FhwQY2REitVtn1zQX+Wo400sTD49Pzy+WyLMvrGOMwf7tOP+S/3aY/Hec7vI17LL+dzvEe27bGoXtCsYzRPaFYxkf3hGIZc/eEYhbyWchnIZ+FfBby7aHw2D2hWMbUPaGYhXwW8lnIZyGfhXwW8lnIZyGfhXwW8lnIZyGfhXwW8lnIZyFffp1ts5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+TJu3ROK7eHFkIV0FvJZyGchn4V8FvJZyGchn4V8FvJZyGchn4V8FvJZyGchn4V8FvJZyLeHwmv3hGJ7+GfGQjoL+Szks5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+TJG94RiFvJZyGchn4V8FvJZyGchn4V8FvJZyGchn4V8FvJZyGchn4V8FvJZyJdx6p5QLGPpnlDMQj4L+Szks5DPQj4L+Szk20Ph1m/Aa5zX3LJ1fAJD1Ad8iQkVKgAAAABJRU5ErkJggg==", // İkonunuzun URL'sini buraya ekleyin
+                        scaledSize: new google.maps.Size(iconSize, iconSize),
+                    },
+                    visible: map.getZoom() >= zoomThreshold, // İkonları başlangıçta belirtilen eşiğe göre görünür veya gizli yapın
+                });
+
+                iconmarkers.push(marker); // Ikonu dizide sakla
+
+                google.maps.event.addListener(map, "zoom_changed", function () {
+                    const currentZoom = map.getZoom();
+
+                    // Zoom seviyesine göre ikonları görünür veya gizli yapın
+                    for (var i = 0; i < iconmarkers.length; i++) {
+                        iconmarkers[i].setVisible(currentZoom >= zoomThreshold);
+                    }
+                });
+            }
+
+            // Son nokta ile ilk nokta arasında çizgi çizmek için
+            var lastLineCoordinates = [new google.maps.LatLng(bmarkers[bmarkers.length - 1][0], bmarkers[bmarkers.length - 1][1]), new google.maps.LatLng(bmarkers[0][0], bmarkers[0][1])];
+            var lastLine = new google.maps.Polyline({
+                path: lastLineCoordinates,
+                geodesic: true,
+                strokeColor: "#FF0000",
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: map,
+            });
+
+            var lastMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(bmarkers[bmarkers.length - 1][0], bmarkers[bmarkers.length - 1][1]), // Son noktanın konumu
+                map: map,
+                icon: {
+                    url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAARVBMVEX//wCrqwCXlwCEhABycgBhYQBzcwCMjABjYwBAQACxsQAAAAAqKgAzMwA+PgBJSQBQUABnZwCSkgCmpgB+fgBrawB3dwDGRRtnAAABh0lEQVR4nO3dS07DQBAG4W57nId5hQS4/1FhwQY2REitVtn1zQX+Wo400sTD49Pzy+WyLMvrGOMwf7tOP+S/3aY/Hec7vI17LL+dzvEe27bGoXtCsYzRPaFYxkf3hGIZc/eEYhbyWchnIZ+FfBby7aHw2D2hWMbUPaGYhXwW8lnIZyGfhXwW8lnIZyGfhXwW8lnIZyGfhXwW8lnIZyFffp1ts5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+TJu3ROK7eHFkIV0FvJZyGchn4V8FvJZyGchn4V8FvJZyGchn4V8FvJZyGchn4V8FvJZyLeHwmv3hGJ7+GfGQjoL+Szks5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+Szks5DPQj4L+TJG94RiFvJZyGchn4V8FvJZyGchn4V8FvJZyGchn4V8FvJZyGchn4V8FvJZyJdx6p5QLGPpnlDMQj4L+Szks5DPQj4L+Szk20Ph1m/Aa5zX3LJ1fAJD1Ad8iQkVKgAAAABJRU5ErkJggg==", // İkonunuzun URL'sini buraya ekleyin
+                    scaledSize: new google.maps.Size(iconSize, iconSize)
+                },
+                visible: map.getZoom() >= zoomThreshold // İkonu başlangıçta belirtilen eşiğe göre görünür veya gizli yapın
+            });
+
+            iconmarkers.push(lastMarker); // Son nokta ikonunu dizide sakla
+
+
+        });
+
+        const resimlerDivs = $(".resimler");  //Resim bilgilerini iceren divleri sec
+        let photos = []
+
+        resimlerDivs.each(function () {
+            photos.push([$(this).data("image"), $(this).data("gps_latitude"), $(this).data("gps_longitude")])
+        })
+
+
+
+        function convertFractionToDecimal(fraction) {
+            const parts = fraction.split('/');
+            const numerator = parseFloat(parts[0]);
+            const denominator = parseFloat(parts[1]);
+            return numerator / denominator;
+        }
+
+        function openImage(imageUrl) {
+            // Resmi modal penceresine yuklme
+            const modalContent = document.getElementById("yuklenenresim");
+            modalContent.src = imageUrl;
+
+            $('#YuklemeModal').modal('show');
+
+        }
+
+        const zoomThreshold = 13; // Ikonların görünmeye başlayacağı zoom seviyesi
+
+        for (let i = 0; i < photos.length; i++) {
+            const lat = convertFractionToDecimal(photos[i][1]);
+            const lng = convertFractionToDecimal(photos[i][2]);
+
+            const pMarker = new google.maps.Marker({
+                position: { lat: lat, lng: lng },
+                map: map,
+                icon: {
+                    url: "https://i.pinimg.com/564x/ec/14/7c/ec147c4c53abfe86df2bc7e70c0181ff.jpg", // İkonunuzun URL'sini buraya ekleyin
+                    scaledSize: new google.maps.Size(iconSize, iconSize),
+                },
+                visible: map.getZoom() >= zoomThreshold, // İkonları başlangıçta belirtilen eşiğe göre görünür veya gizli yapın
+            });
+
+            google.maps.event.addListener(pMarker, 'click', function () {
+                openImage(photos[i][0]);
+            })
+
+
+            iconmarkers.push(pMarker); // Ikonu dizide sakla
+
+            google.maps.event.addListener(map, "zoom_changed", function () {
+                const currentZoom = map.getZoom();
+
+                // Zoom seviyesine göre ikonları görünür veya gizli yapın
+                for (var i = 0; i < iconmarkers.length; i++) {
+                    iconmarkers[i].setVisible(currentZoom >= zoomThreshold);
+                }
+            });
+        }
+
+
+
+        document.getElementById("photoForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Formun sayfayı yenilemesini engelle
+        
+            let photoFile = document.getElementById("photoInput").files[0];
+            let latitude = parseFloat(document.getElementById("latitude").value);
+            let longitude = parseFloat(document.getElementById("longitude").value);
+        
+            let image = {
+                url: URL.createObjectURL(photoFile),
+                scaledSize: new google.maps.Size(50, 50)
+            };
+        
+            let photoMarker = new google.maps.GroundOverlay(
+                image.url,
+                new google.maps.LatLngBounds(
+                    new google.maps.LatLng(latitude - 0.0005, longitude - 0.0005),
+                    new google.maps.LatLng(latitude + 0.0005, longitude + 0.0005)
+                )
+            );
+        
+            photoMarker.setMap(map);
+        
+            // Form verilerini Django'ya gönder
+            fetch('/save_photo/', {
+                method: 'POST',
+                body: JSON.stringify({ latitude: latitude, longitude: longitude, url: image.url }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        });
+
+        
+
+       
+        
+        
+        
+
+    }
+
+    let pointA = null;
+    let pointB = null;
+    let markerA = null;
+    let markerB = null;
+    let polyline = null;
+
+
+    function distance() {
+        if (pointA || pointB || polyline) {
+            clearMeasurements();
+            return;
+        }
+
+
+        map.addListener('click', function (event) {
+            if (pointA && pointB) {
+                // Eğer hem pointA hem de pointB belirlenmişse, yeni bir ölçüm yapmak için önceki noktaları ve çizgiyi temizleyin
+                clearMeasurements();
+            }
+
+            if (!pointA) {
+                pointA = event.latLng;
+                markerA = new google.maps.Marker({
+                    position: pointA,
+                    map: map
+                });
+            }
+            else {
+                pointB = event.latLng;
+                markerB = new google.maps.Marker({
+                    position: pointB,
+                    map: map
+                });
+
+                polyline = new google.maps.Polyline({
+                    path: [pointA, pointB],
+                    geodesic: true,
+                    strokeColor: "yellow",
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2,
+                    map: map
+                });
+
+                let distance = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
+                distance = distance.toFixed(4);
+                document.getElementById('length').innerHTML = distance + " m";
+            }
+        });
+
+    }
+
+    function clearMeasurements() {
+        if (pointA) {
+            pointA = null;
+            markerA.setMap(null);
+        }
+        if (pointB) {
+            pointB = null;
+            markerB.setMap(null);
+        }
+        if (polyline) {
+            polyline.setMap(null);
+        }
+        document.getElementById('length').innerHTML = ""
+    }
+
+</script>
+
+{% endblock content %}
+
+
+{% include "includes/_footer.html" %}

@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+{%load static %}
+
+{% block title %}
+
+
+{% endblock title %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock css %}
+
+{% block header %}
+{% include "includes/_navbar.html" %}
+{% endblock header %}
+
+{% block content %}
+
+<div class="container cardk">
+    <div class="card col-md-6 col-sm-8 col-10">
+        <div class="card-header d-flex justify-content-center ">
+            <p>
+                <button onclick="toggleForms()" class="btn  ms-5" type="button">
+                    Giris Yap
+                </button>
+            </p>
+            <p>
+                <button  onclick="toggleForms()" class="btn ky" type="button">
+                    Kayit Ol
+                </button>
+            </p>
+        </div>
+        <div class="card-body">
+            <form action="" method="POST" id="login" style="display: block;">
+                {% csrf_token %}
+                <label for="">Kullanici Adi</label>
+                <input type="text" name="username" class="form-control mt-2 ms-5" placeholder="Kullanici adinizi giriniz">
+                <label for="" class="mt-3">Sifre</label>
+                <input type="password" name="password" id="" class="form-control mt-2 ms-5" placeholder="Sifrenizi giriniz">
+                <input type="submit" value="Giris Yap" class="form-control mt-4 ms-5 buton">
+            </form>
+            <form action="" method="POST" id="register" style="display: none;">
+                {% csrf_token %}
+                <label for="" class="mt-2">Kullanici Adi</label>
+                <input type="text" name="username" class="form-control mt-2" placeholder="Kullanici adinizi giriniz">
+                <label for="" class="mt-3">Sifre</label>
+                <input type="password" name="password1" id="" class="form-control mt-2" placeholder="Sifrenizi giriniz">
+                <label for="" class="mt-3">Sifreyi yeniden giriniz</label>
+                <input type="password" name="password2" id="" class="form-control mt-2"
+                    placeholder="Sifrenizi yeniden giriniz">
+                <input type="submit" name="register" value="Kayit ol" class="form-control mt-4 ms-5  buton1">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleForms() {
+        $("#login").toggle();
+        $("#register").toggle();
+    }
+</script>
+{% endblock %}
+{% include "includes/_footer.html" %}
+

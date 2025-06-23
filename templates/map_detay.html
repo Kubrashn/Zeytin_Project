@@ -1,0 +1,143 @@
+{% extends "index.html" %}
+{%load static %}
+
+{% block title %}
+<title>Map</title>
+{% endblock title %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock css %}
+
+{% block header %}
+{% include "includes/_navbar.html" %}
+{% endblock header %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="konumBilgiOffcanvas"
+                aria-labelledby="konumBilgiOffcanvasLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="konumBilgiOffcanvasLabel">Konum Bilgileri</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div id="konumBilgiIcerik">
+                        <!-- Konum bilgileri burada görüntülenecek -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div id='map' style='width: 100%; height: 500px;'></div>
+            {% for konum in konumlar %}
+            <div class="konum" data-lat="{{ konum.lat }}" data-long="{{ konum.long }}" data-title="{{ konum.title }}"
+                data-address="{{ konum.address }}" data-content="{{ konum.content }}"></div>
+            {% endfor %}
+            {% for birlestirme in birlesmeler %}
+            <div class="birlestirme">
+                {% for bkonum in birlestirme.lat_long_values.all %}
+                <div class="bkonum" data-lat="{{ bkonum.lat }}" data-long="{{ bkonum.long }}"></div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    let map;
+    let infoWindow;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12,
+            center: { lat: 41.015137, lng: 28.979530 }
+        });
+
+        // Varsayılan InfoWindow'u oluşturun ve hemen kapatın
+        infoWindow = new google.maps.InfoWindow();
+        infoWindow.close();
+
+        const konumlarDivs = $(".konum"); // Konum bilgilerini içeren divleri seç
+        let markers = [];
+
+
+
+        konumlarDivs.each(function () {
+            markers.push([$(this).data("lat"), $(this).data("long"), $(this).data("title"), $(this).data("address"), $(this).data("content")]);
+        });
+
+
+        // Yeni konumunuz için lat ve lng değerlerini güncelleyin
+        for (let i = 0; i < markers.length; i++) {
+            const newMarker = new google.maps.Marker({
+                position: { lat: markers[i][0], lng: markers[i][1] },
+                map: map,
+                label: "A",
+                title: markers[i][2],
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+            });
+
+            // Marker'a tıklanınca ilgili InfoWindow'u açın
+            google.maps.event.addListener(newMarker, 'click', function () {
+                // Yan taraftaki InfoWindow'u güncelleyin
+                infoWindow.setContent("<strong>Adres:</strong> " + markers[i][3] + "<br><strong>İçerik:</strong> " + markers[i][4]);
+                infoWindow.open(map, newMarker); // InfoWindow'u açın
+                $("#konumBilgiIcerik").html(infoWindow.getContent());
+                $("#konumBilgiOffcanvas").offcanvas('show');
+            });
+        }
+
+
+
+
+        const birlestirmeDivs = $(".birlestirme"); // Her bir "Birlestirme" nesnesini içeren divleri seç
+
+        birlestirmeDivs.each(function () {
+            const bmarkers = [];
+            const bkonumlarDivs = $(this).find(".bkonum");
+
+        bkonumlarDivs.each(function () {
+            bmarkers.push([$(this).data("lat"), $(this).data("long")]);
+        });
+
+        for (var i = 0; i < bmarkers.length - 1; i++) {
+            var lineCoordinates = [new google.maps.LatLng(bmarkers[i][0], bmarkers[i][1]), new google.maps.LatLng(bmarkers[i + 1][0], bmarkers[i + 1][1])];
+            var line = new google.maps.Polyline({
+                path: lineCoordinates,
+                geodesic: true,
+                strokeColor: "#FF0000",
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                    map: map,
+            });
+        }
+
+        // Son nokta ile ilk nokta arasında çizgi çizmek için
+        var lastLineCoordinates = [new google.maps.LatLng(bmarkers[bmarkers.length - 1][0], bmarkers[bmarkers.length - 1][1]), new google.maps.LatLng(bmarkers[0][0], bmarkers[0][1])];
+        var lastLine = new google.maps.Polyline({
+            path: lastLineCoordinates,
+            geodesic: true,
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+                map: map,
+            });
+        });
+
+
+    }
+
+
+</script>
+{% endblock content %}
+
+
+{% include "includes/_footer.html" %}

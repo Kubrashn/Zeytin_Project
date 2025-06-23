@@ -1,0 +1,145 @@
+{% extends "index.html" %}
+{%load static %}
+
+
+{% block header %}
+  <!-- templates/includes/_navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/" style="margin-left: 5px; opacity: 0.9; text-shadow: 1px 1px 1px rgb(41, 40, 40); font-size: larger; font-weight: 500;">Anasayfa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(255, 255, 255); font-size: larger; font-weight: 500;" class="nav-link" aria-current="page" href="{% url 'index' %}">Projemiz</a>
+                </li>
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(255, 255, 255); font-size: larger; font-weight: 500;" class="nav-link" aria-current="page" href="{% url 'map' %}">Harita</a>
+                </li>
+                <!-- Arisarge'nin herkese açık profili -->
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(255, 255, 255); font-size: larger; font-weight: 500;" class="nav-link" href="{% url 'profile' arisarge_profile_id %}">Arisarge Profili</a>
+                </li>
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(255, 255, 255); font-size: larger; font-weight: 500;" class="nav-link" href="{% url 'tanıtım' %}">Zeytin Hasadı</a>
+                </li>
+            </ul>
+            <!-- Kullanıcı giriş yapmışsa -->
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"> {{ request.user.username }}</i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'profile' request.user.profile.id %}"><b>{{ request.user.username }}</b></a>
+                        <a class="dropdown-item" href="/logout/">Çıkış Yap</a>
+                    </div>
+                </li>
+            </ul>
+            {% else %}
+            <!-- Kullanıcı giriş yapmamışsa -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(0, 0, 0); font-size: larger; font-weight: 500;" class="nav-link" href="/login/">Giriş Yap</a>
+                </li>
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(0, 0, 0); font-size: larger; font-weight: 500;" class="nav-link" href="/login/">Kayıt Ol</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+
+
+<style>
+    .ilk {
+        margin-left: 14px ;
+    }
+    .navbar-nav li a:hover{
+        color: rgb(18, 228, 176);
+    }
+    .navbar-toggler{
+        background-color: white;
+        
+    }
+    .navbar {
+    position: relative;
+    z-index: 2; 
+    color: rgb(0, 0, 0); 
+    background-color: #808D7C!important; 
+}
+.navbar-brand {
+    color: rgb(255, 255, 255);
+}
+.nav-link {
+    text-shadow: 1px 1px 1px rgb(41, 40, 40)!important;
+    color: white!important;
+}
+</style>
+{% endblock header %}
+
+{% block content %}
+<section class="photo-section">
+    <div class="photo-container">
+        <img src="/static/img/tanitim/DJI_20241118113249_0121_D.JPG" class="tayri">
+        <div class="info mt-5 mb-5" data-aos="fade-up">
+            <h1 style="font-weight: 700;">Zeytin Hasadı</h1>
+            <div class="content-wrapper">
+                <!-- Sol taraf: Resim -->
+                <div class="col-6 left mt-4">
+                    <img src="/static/img/tanitim/Slide1.jpg" alt="">
+                </div>
+                <!-- Sağ taraf: Yazılar -->
+                <div class="col-6 right">
+                    <ul>
+                        <li class="mt-5" >
+                            <h5>Doğru Zamanlama Önemlidir</h5>
+                            <p>Zeytinler genellikle Ekim ayından Ocak ayına kadar olan dönemde hasat edilir. Olgunlaşma seviyesi, elde edilmek istenen zeytinyağının kalitesini belirler. Erken hasat zeytinler daha düşük verim verir ancak daha kaliteli, aromatik ve düşük asitli yağ üretir.</p>
+                        </li>
+                        <li class="mt-5">
+                            <h5>Hasat Yöntemleri</h5>
+                            <p >Zeytinler elle toplama, sırıkla çırpma veya mekanik sallama gibi yöntemlerle hasat edilir. Elle toplama yöntemi, meyvenin zarar görmesini engeller ve yüksek kaliteli zeytinyağı üretimi için tercih edilir. Hasat çalışmalarımızda zeytin silkme hasat makineleri kullanılmaktadır.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="photo-section">
+    <div class="photo-container">
+        <img src="/static/img/tanitim/DJI_20241118113249_0121_D.JPG" class="tayri">
+        <div class="info" data-aos="fade-up mt-5">
+            <h1 style="font-weight: 700;">Sıkım Aşaması</h1>
+            <div class="content coniki mt-3" style="font-weight: 600;">
+                    <p style="font-weight: 600; margin-left: 50px; margin-right: 50px;" class="mt-5"> Zeytinyağı Sıkım Süreci
+                        Zeytinyağı üretimi, dikkat ve hassasiyet gerektiren bir süreçtir. Kaliteli zeytinyağı elde etmek için şu adımlar takip edilir:
+        
+                        Zeytinlerin Toplanması: Zeytinler, hasat zamanı özenle toplanır. Erken hasat zeytinler, daha yoğun aromalı ve düşük asitli yağlar üretir.
+                        Temizleme ve Ayıklama: Zeytinler, yabancı maddelerden ayrılarak yıkanır ve temiz, nitelikli bir fabrikaya sıkım için götürülür. 
+                         Kırma ve Yoğurma: Zeytinler öğütülerek macun haline getirilir. Bu aşama, zeytinyağının kalitesini doğrudan etkiler.
+                        </p>
+                    <p>Aşağıdaki videodan fabrika sıkım aşamalarını inceleyebilirisiniz.</p>    
+                    <video width="640" height="360" controls poster="/static/img/tanitim/siyahzeytin.jpeg" class="tanvid">
+                        <source src="/static/img/Untitled video - Made with Clipchamp (6).mp4" type="video/mp4">
+                        Tarayıcınız bu videoyu desteklemiyor.
+                    </video>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    AOS.init(); /* Scroll animasyonlarını başlatır */
+</script> 
+
+{% endblock %}
+{% include "includes/_footer.html" %}

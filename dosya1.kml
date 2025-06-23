@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="1">
+        <Placemark id="3">
+            <name>IMG_3354</name>
+            <description>ZY</description>
+            <Point id="2">
+                <coordinates>27.448531,37.996092,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="5">
+            <name>IMG_3355</name>
+            <description>ZY</description>
+            <Point id="4">
+                <coordinates>27.448538,37.996092,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="7">
+            <name>IMG_3353</name>
+            <description>ZY</description>
+            <Point id="6">
+                <coordinates>27.448564,37.996095,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="9">
+            <name>IMG_3356</name>
+            <description>ZY</description>
+            <Point id="8">
+                <coordinates>27.448509,37.996086,0.0</coordinates>
+            </Point>
+        </Placemark>
+    </Document>
+</kml>
+

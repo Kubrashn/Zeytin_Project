@@ -1,0 +1,474 @@
+.ari_navbar {
+    background-color: #f0ece2;
+}
+
+.nav-link {
+    color: black;
+    font-size: x-large;
+    font-weight: 600;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-left: 40px;
+}
+
+.nav-item {
+    margin-left: 7px;
+}
+
+.navbar-brand {
+    color: black;
+    font-size: xx-large;
+    font-weight: 600;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+.gif {
+    background-size: cover;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+
+
+.gif-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.kapi {
+    width: 400px;
+    border-radius: 20px;
+}
+
+.bizkimiz {
+    font-size: 70px;
+    font-weight: 400;
+    font-family: 'Noto Sans Kawi', sans-serif;
+}
+
+.hr {
+    border-bottom: #070f4e 5px solid;
+    width: 170px;
+}
+
+.butonlar {
+    display: flex;
+    justify-content: center;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.buttons {
+    border: #070f4e 2px solid;
+    border-radius: 50px;
+    padding: 16px;
+}
+
+.hzmt {
+    font-size: 50px;
+    font-weight: 400;
+    font-family: 'Noto Sans Kawi', sans-serif;
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.cizgi {
+    border-bottom: #070f4e 2px solid;
+    width: 170px;
+    margin-bottom: 93px;
+}
+
+.button-container b {
+    margin-top: 20px;
+}
+
+.content {
+    height: 500px;
+    display: none;
+    animation: slideIn 0.9s linear;
+    border-radius: 20px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+#havada {
+    background-image: url(media/ari_img//hava11.png);
+    display: block;
+}
+
+#tarimda {
+    background-image: url(media/ari_img//tarim.png);
+}
+
+#denizde {
+    background-image: url(media/ari_img//deniz.png);
+}
+
+#karada {
+    background-image: url(media/ari_img//kara2.png);
+}
+
+.baslik {
+    font-size: 40px;
+    font-weight: 500;
+    margin-top: 30px;
+}
+
+.sinyalhava , .sinyaldeniz{
+    width: 480px;
+}
+.sinyalkara{
+    width: 400px;
+}
+.sinyaltarim{
+    width: 460px;
+}
+
+.mv {
+    margin-left: auto;
+}
+
+footer {
+    background-color: #f0ece2;
+}
+
+.iletisim {
+    font-size: 50px;
+    font-weight: 400;
+    font-family: 'Noto Sans Kawi', sans-serif;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.cizgi2 {
+    border: #070f4e solid 1px;
+}
+iframe{
+    width: 500px;
+    height: 450px;
+}
+.ariarge{
+    font-size: 26px;
+}
+.gizli{
+    display: none;
+}
+.sinyaldeniz{
+    margin-top: 27px;
+}
+@media screen and (max-width:1200px) {
+    .kapi {
+        width: 350px;
+    }
+}
+@media (max-width: 1200px){
+    .container, .container-md, .container-sm {
+        max-width: 1100px;
+    }
+}
+
+@media screen and (max-width:1175px){
+    iframe{
+        width: 450px;
+        height: 400px;
+    }
+}
+@media screen and (max-width:1082px){
+    .sinyalhava , .sinyaldeniz{
+        width: 440px;
+    }
+    .sinyaltarim{
+        width: 440px;
+    }
+}
+@media screen and (max-width:1064px){
+    iframe{
+        width: 380px;
+        height: 360px;
+    }
+}
+@media screen and (max-width:1003px){
+    .sinyalhava , .sinyaldeniz{
+        width: 400px;
+        height: 250px;
+    }
+    .sinyalkara{
+        width: 400px;
+    }
+    .sinyaltarim{
+        width: 400px;
+    }
+}
+@media screen and (max-width:992px) {
+    .kapi {
+        width: 320px;
+        height: 500px;
+    }
+    .bizkimiz {
+        font-size: 60px;
+        font-weight: 400;
+    }
+}
+@media (max-width: 991px){
+    .container, .container-md, .container-sm {
+        max-width: 1100px;
+    }
+}
+@media screen and (max-width:943px){
+    iframe{
+        width: 320px;
+        height: 290px;
+    }
+    footer{
+        margin-top: 60px;
+    }
+}
+@media screen and (max-width:923px){
+    .kapi{
+        width: 300px;
+        height: 450px;
+    }
+    .bizkimiz {
+        font-size: 50px;
+        font-weight: 400;
+    }
+    .ariarge{
+        font-size: 20px;
+    }
+    .about h4{
+        font-size: 20px;
+    }
+}
+@media screen and (max-width:907px){
+    .sinyalhava , .sinyaldeniz{
+        width: 350px;
+        height: 230px;
+    }
+    .sinyalkara{
+        width: 350px;
+    }
+    .sinyaltarim{
+        width: 350px;
+    }
+}
+@media screen and (max-width:844px){
+    .cizgi {
+        margin-bottom: 123px;
+    }
+    .sinyaltarim {
+        margin-top: 90px!important;
+    }
+    
+}
+@media screen and (max-width:796px){
+    .sinyalhava , .sinyaldeniz{
+        width: 300px;
+        height: 210px;
+    }
+    .sinyalkara{
+        width: 300px;
+        height: 210px;
+    }
+    .sinyaltarim{
+        width: 300px;
+        height: 230px;
+    }
+    .lorem{
+        font-size: 13.9px;
+    }
+}
+@media screen and (max-width:765px){
+    iframe{
+        width: 500px;
+        height: 450px;
+    }
+    footer{
+        margin-top:110px;
+    }
+}
+@media screen and (max-width: 760px) {
+    .misviz{
+        display: none;
+    }
+    .gizli{
+        display: block;
+        margin-top: 40px;
+    }
+    .kapi{
+        width: 270px;
+        height: 400px;
+    }
+    .bizkimiz {
+        font-size: 50px;
+        font-weight: 400;
+        display: flex;
+        justify-content: center;
+    }
+    .ariarge{
+        font-size: 23px;
+        margin-top: 40px;
+    }
+}
+@media screen and (max-width:716px){
+    footer{
+        margin-top: 120px;
+    }
+}
+@media screen and (max-width:703px){
+    .sinyalhava{
+        width: 250px;
+        height: 190px;
+    }
+    .sinyaldeniz{
+        width: 260px;
+        height: 270px;
+    }
+    .sinyalkara{
+        width: 250px;
+        height: 210px;
+    }
+    .sinyaltarim{
+        width: 250px;
+        height: 260px;
+    }
+    .lorem{
+        font-size: 13.9px;
+    }
+    footer{
+        margin-top:200px;
+    }
+}
+@media screen and (max-width:673px){
+    .kapi{
+        width: 220px;
+        height: 350px;
+    }
+    .bizkimiz {
+        font-size: 52px;
+        font-weight: 400;
+        display: flex;
+        justify-content: center;
+    }
+    .ariarge{
+        font-size: 22px;
+    }
+}
+@media screen and (max-width:638px){
+    iframe{
+        width: 350px;
+        height: 300px;
+    }
+}
+@media screen and (max-width:587px){
+    .content{
+        height: 550px;
+    }
+    .lorem{
+        margin-top: 17px;
+    }
+}
+@media screen and (max-width:573px){
+    .sinyaldeniz, .sinyalhava, .sinyalkara, .sinyaltarim{
+        margin-top: 10px!important;
+    }
+    .sinyaldeniz, .sinyalhava, .sinyalkara, .sinyaltarim {
+        width: 400px!important;
+        margin-left: 10px!important;
+    }
+}
+@media screen and (max-width:564px){
+    .cizgi {
+        margin-bottom: 100px;
+    }
+    .buttons {
+        padding: 10px;
+    }
+    .butonlar b{
+        font-size: smaller;
+    }
+}
+@media screen and (max-width:544px){
+    .kapi{
+        width: 190px;
+        height: 300px;
+    }
+    .bizkimiz {
+        font-size: 47px;
+        font-weight: 400;
+        display: flex;
+        justify-content: center;
+    }
+    .ariarge{
+        font-size: 18px;
+    }
+}
+@media screen and (max-width:508px){
+    .cizgi{
+        margin-bottom: 122px;
+    }
+}
+@media screen and (max-width:500px){
+    .content{
+        height: 600px;
+    }
+}
+@media screen and (max-width:471px){
+    .kapi{
+        width: 150px;
+        height: 240px;
+    }
+    .bizkimiz {
+        font-size: 35px;
+        font-weight: 400;
+        display: flex;
+        justify-content: center;
+    }
+    .ariarge{
+        font-size: 16px;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+    .sinyaldeniz, .sinyalhava, .sinyalkara, .sinyaltarim {
+        width: 350px!important;
+        margin-left: 10px!important;
+    }
+}
+@media screen and (max-width:440px){
+    iframe{
+        width: 350px;
+        height: 350px;
+        margin-left: 5px!important;
+    }
+}
+@media screen and (max-width:417px){
+    .content{
+        height: 680px;
+    }
+    .sinyaldeniz, .sinyalhava, .sinyalkara, .sinyaltarim {
+        width: 280px!important;
+        margin-left: 10px!important;
+    }
+}
+
+.foot{
+    display:none!important;
+}
+    

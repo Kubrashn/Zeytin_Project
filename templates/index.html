@@ -1,0 +1,142 @@
+{%load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block title %}
+  <title>Home</title>
+  {% endblock title %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADxh-MsSxXj40FXn-7zNqOL-wO6sLgDt8&callback=initMap&libraries=&v=weekly"
+    defer></script>
+  {% block css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  {% endblock css %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+</head>
+
+<body>
+
+  {% block header %}
+  <header class="header">
+    <video autoplay muted loop class="header-video">
+      <source src="/media/resimler/Untitled video - Made with Clipchamp (3).mp4" type="video/mp4">
+      Your browser does not support the video tag.
+  </video>  
+    {% include "includes/_navbar.html" %}
+</header>
+  {% endblock header %}
+
+
+  {% block content %}
+
+  {% if messages %}
+  {% for mesaj in messages %}
+  <div class="alert alert-{{mesaj.tags}} text-center" id="alerttt" style="margin-top: 70px;">
+    {{mesaj}}
+  </div>
+  {% endfor %}
+  {% else %}
+  {% endif %}
+
+  <div class="container">
+    <div class="anabaslik mt-5">
+      <div class="row">
+        <p class="d-flex justify-content-center arge">Tarımda AR-GE</p>
+      </div>
+      <div class="row mt-2">
+        <h1 class="d-flex justify-content-center mt-3 arge">Smart Monitoring of Fruit Trees</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row neyapiyoruz">
+      <div class="col-8">
+        <p class="ms-5">Neler Yapıyoruz?</p>
+        <ul class="mt-4">
+            <li>Arazinizi sistemimize kaydediyoruz.</li>
+            <li>Arazinizdeki her ağaç için bir profil sayfası oluşturuyoruz.</li>
+            <li>Her ağaç için özel QR kodlar oluşturup size veri ve bilgi aktarımı sağlıyoruz.</li>
+        </ul>
+    </div>
+    <div class="col-4 zeytun">
+        <img src="/media/resimler/yeniwebp.webp" alt="">
+    </div>
+</div>
+  </div>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-12 d-flex justify-content-center">
+        <img src="/media/resimler/Screenshot 2024-08-19 115934.png" class="mt-5 sema" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="project-benefit-box">
+        <h2>Projemizin Kazanımları</h2>
+        <ul>
+          <li>Arazinizin İhtiyaçlarına Öngörülü Yaklaşım: <p>Arazinizin ihtiyaçlarını önceden tespit ederek, olası sorunlara karşı erken önlem alma şansınız olur. Böylece, olumsuz durumlarla karşılaşmadan verimli bir tarım süreci sürdürebilirsiniz.</p></li>
+          <li>Termal ve Optik Görüntülerle Analiz: <p>Arazinizden termal ve optik görüntüler elde ederek, toprak ve bitki sağlığını daha iyi analiz edebilir, doğru tarım yöntemlerini belirleyebilirsiniz.</p> </li>
+          <li>Teknolojiyi Arazinizle Buluşturarak Yenilikçi Olun: <p>Arazinizi modern teknolojilerle entegre ederek, daha yenilikçi ve akıllı tarım uygulamalarını hayata geçirebilir, verimliliği artırabilirsiniz.</p></li>
+          <li>Daha Verimli Ürünler Elde Edin: <p>Gelişmiş analiz ve izleme yöntemleri sayesinde, arazinizden daha verimli ürünler elde edebilir, üretim kalitenizi yükseltebilirsiniz.</p></li>
+        </ul>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    function sortTable() {
+
+      const tableBody = document.getElementById('arsalartablo');
+      const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+      rows.sort((a, b) => {
+        const cellA = a.querySelector('.arsalar').getAttribute('data-isim').toLowerCase();
+        const cellB = b.querySelector('.arsalar').getAttribute('data-isim').toLowerCase();
+        return cellA.localeCompare(cellB);
+      });
+
+      rows.forEach(row => tableBody.appendChild(row));
+      window.onload = sortTable;
+      console.log(rows)
+    }
+
+    document.getElementById("siralama").addEventListener("click", sortTable);
+  </script>
+  {% endblock content %}
+
+  {% include "includes/_footer.html" %} 
+
+
+  
+
+<script>
+    function showOverlay(imgs) {
+  var expandImg = document.getElementById('modal-image');
+  expandImg.src = imgs.src;
+  expandImg.parentElement.style.display = "block";
+}
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script src="/static/js/app.js"></script>
+
+</body>
+
+</html>

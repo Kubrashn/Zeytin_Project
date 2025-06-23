@@ -1,0 +1,53 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+<title>Ağaç Listesi</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-12">
+            <div class="listebaslik mt-4">
+                <h3 style="text-align: center; vertical-align: middle;" >{{ arazi.isim }} Arazisindeki Ağaçlar</h3>
+            </div>
+            <table class="table table-bordered mt-5">
+                <thead>
+                    <tr>
+                        <td style="text-align: center;">Resim</td>
+                        <td style="text-align: center;">Özellikler</td>
+                        <td style="text-align: center;">QR Kod</td>
+                        <td style="text-align: center;">Detay</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for agac in agaclar %}
+                    <tr>
+                        <td>
+                            {% if agac.aimage %}
+                                <img src="{{ agac.aimage.url }}" alt="Ağaç Resmi" class="img-thumbnail ms-5">
+                            {% else %}
+                                <img src="{% static 'img/default_tree.jpg' %}" alt="Varsayılan Ağaç Resmi" class="img-thumbnail">
+                            {% endif %}
+                        </td>
+                        <td>{{ agac.ozellik }}</td>
+                        <td style="text-align: center;">
+                            {% if agac.qr_code %}
+                                <img src="{{ agac.qr_code.url }}" alt="QR Kod" class="img-thumbnail mt-3">
+                            {% else %}
+                                <span>QR Kodu Yok</span>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center; vertical-align: middle;">
+                            <button type="button"  class="btn listeb mt-4"><a href="{% url 'agac_detay' agac.id %}">Detay</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% include "includes/_footer.html" %} 

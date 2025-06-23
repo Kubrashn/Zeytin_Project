@@ -1,0 +1,81 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock title %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock css %}
+
+
+<!-- profil.html -->
+{% block header %}
+    <div class="header-profil">
+        {% include "includes/_navbar.html" %}
+        <div class="header-kisikutu">
+            <div class="container">
+                <div class="row">
+                    <div class="ilksatir">
+                        <div class="ppfoto">
+                            <img src="/media/resimler/frıends.jpg"  alt="">
+                        </div>
+                        <h4 class="mt-3">Kubra Sahin</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock header %}
+
+
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <ul class="profil-nav d-flex">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/profile/">Hakkinda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Information</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/medya/">Medya</a>
+            </li>
+          </ul>
+    </div>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-9 medya-9 mt-5">
+            <h5>Hyperspectral Images</h5>
+            <div class="row mt-5">
+                <div class="col-4">
+                    <img src="/media/resimler/frıends.jpg" alt="">
+                </div>
+                <div class="col-4">
+                    <img src="/media/resimler/frıends.jpg" alt="">
+                </div>
+                <div class="col-4">
+                    <img src="/media/resimler/frıends.jpg" alt="">
+                </div>
+            </div>
+            <h5 class="mt-5">Thermal Images</h5>
+            <div class="row mt-5">
+                <div class="col-4">
+                    <img src="/media/resimler/frıends.jpg" alt="">
+                </div>
+                <div class="col-4">
+                    <img src="/media/resimler/frıends.jpg" alt="">
+                </div>
+                <div class="col-4">
+                    <img src="/media/resimler/frıends.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

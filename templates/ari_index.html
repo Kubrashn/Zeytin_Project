@@ -1,0 +1,242 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/style1.css' %}" />
+{% endblock css %}
+    
+
+{% block header %}
+<div class="ari_header">
+    <nav class="ari_navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="d-flex">
+                <img src="media/ari_img/logo.png" class="img-fluid" width="70px" alt="">
+                <a class="navbar-brand ms-4 mt-2" href="/">ArıArge</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto d-flex justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#bizkimiz">Hakkında</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hzmt">Hizmetler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#iletisim">İletişim</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="gif-container">
+        <video class="gif" autoplay muted>
+            <source src="media/ari_img/ARIARGE video.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+    </div>
+</div>
+{% endblock header %}
+   
+
+    {% block content %}
+
+    <section class="about mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-5 ">
+                    <img src="media/ari_img/kapi.jpg" class="kapi" alt="">
+                </div>
+                <div class="col-7 ">
+                    <p class="bizkimiz" id="bizkimiz">BİZ KİMİZ </p>
+                    <p class="ariarge ">ARIARGE, Yüksek Teknolojili Ar-Ge Çalışmaları Gerçekleştiren,
+                        Yerli Ürünler Geliştirmeyi Hedefleyen Bir Ar-Ge Firmasıdır.</p>
+                    <div class="row mt-5 misviz">
+                        <div class="col-6 mv">
+                            <h4>MİSYONUMUZ</h4>
+                            <div class="hr"></div>
+                            <p class="mt-3">İleri Teknoloji ve Mühendislik alanlarında yenilikçi ve öncü Ar-Ge
+                                çalışmalarıyla, yüksek katma değerli yerli ürünler geliştirmeye odaklı, müşterisiyle
+                                paydaş, ülke kalkınmasını ön planda tutan bir misyona sahiptir.</p>
+                        </div>
+                        <div class="col-6 mv">
+                            <h4 class="vizyon">VİZYONUMUZ</h4>
+                            <div class="hr vizyon"></div>
+                            <p class="mt-3">Geliştirilen yerli ve özgün ürünler ile ülke kalkınmasında etkin, yurtiçi
+                                ve yurtdışında hem ar-ge kalitesiyle hem de patentleri ve yenilikçi ürünleriyle bilinen
+                                ve tercih edilen bir firma yaratma vizyonu taşımaktadır.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gizli">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6 mv">
+                                <h4>MİSYONUMUZ</h4>
+                                <div class="hr"></div>
+                                <p class="mt-3">İleri Teknoloji ve Mühendislik alanlarında yenilikçi ve öncü Ar-Ge
+                                    çalışmalarıyla, yüksek katma değerli yerli ürünler geliştirmeye odaklı, müşterisiyle
+                                    paydaş, ülke kalkınmasını ön planda tutan bir misyona sahiptir.</p>
+                            </div>
+                            <div class="col-6 mv">
+                                <h4 class="vizyon">VİZYONUMUZ</h4>
+                                <div class="hr vizyon"></div>
+                                <p class="mt-3">Geliştirilen yerli ve özgün ürünler ile ülke kalkınmasında etkin, yurtiçi
+                                    ve yurtdışında hem ar-ge kalitesiyle hem de patentleri ve yenilikçi ürünleriyle bilinen
+                                    ve tercih edilen bir firma yaratma vizyonu taşımaktadır.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hizmetler">
+        <div class="container">
+            <p class="hzmt" id="hzmt">HİZMETLER</p>
+            <div class="butonlar mt-5">
+                <div class="button-container">
+                    <button type="button" class="btn buttons " onclick="degistir('havada')"><i
+                            class="bi bi-cloud"></i></button>
+                    <b>Havada Sinyal İşleme</b>
+                </div>
+                <div class="cizgi"></div>
+                <div class="button-container">
+                    <button type="button" class="btn buttons " onclick="degistir('karada')"><i
+                            class="bi bi-tree-fill"></i></button>
+                    <b>Karada ve Yeraltında Sinyal İşleme</b>
+                </div>
+                <div class="cizgi"></div>
+                <div class="button-container">
+                    <button type="button" class="btn buttons " onclick="degistir('denizde')"><i
+                            class="bi bi-tsunami"></i></button>
+                    <b>Deniz ve Sualtında Sinyal İşleme</b>
+                </div>
+                <div class="cizgi"></div>
+                <div class="button-container">
+                    <button type="button" class="btn buttons  " onclick="degistir('tarimda')"><i
+                            class="bi bi-bug"></i></button>
+                    <b>Tarımda Sinyal İşleme</b>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="sinyaller mt-5">
+        <div class="container">
+            <div class="bolumler">
+                <div class="content" id="havada">
+                    <div class="container">
+                        <p class="d-flex justify-content-center baslik">Havada</p>
+                        <div class="row">
+                            <div class="col-sm-6 mt-3">
+                                <img src="media/ari_img/havar.jpeg" class="ms-4 mt-5 rounded-2 sinyalhava" alt="">
+                            </div>
+                            <div class="col-sm-6 mt-sm-5">
+                                <p class="mt-4" style="font-size: larger;">Daha çok bilgi için youtube kanalımızı ve sitemizi ziyaret edebilirsiniz. <a class="ms-4"
+                                    href="https://www.youtube.com/@ituarislab1773"><i class="bi bi-collection-play" 
+                                      style="font-size: x-large;"></i></a><a href="https://arislab.itu.edu.tr/" class="ms-4"><i class="bi bi-fast-forward-circle"  style="font-size: x-large;"></i></a>
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content" id="karada">
+                    <div class="container">
+                        <p class=" d-flex justify-content-center baslik">Karada</p>
+                        <div class="row">
+                            <div class="col-sm-6 mt-3">
+                                <img src="media/ari_img/karar.jpeg"  class="ms-5 mt-5 rounded-2 sinyalkara" alt="">
+                            </div>
+                            <div class="col-sm-6 mt-5">
+                                <p class="mt-3 ms-2" style="font-size: larger;">Sismik olaylar üzerindeki çalışmalarımızda yüksek hassasiyetli jeofonlar kullanılmaktadır. Önceki projelerimiz arasında şunlar bulunmaktadır: Deprem Veri Analizi, Hayvan-İnsan-Araba Tespiti, Konumlandırma vb.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content" id="denizde">
+                    <div class="container">
+                        <p class=" d-flex justify-content-center baslik">Deniz</p>
+                        <div class="row">
+                            <div class="col-md-6 col-12 deniz mt-3">
+                                <img src="media/ari_img/denizr.jpeg"  class="ms-4  rounded-2 sinyaldeniz" alt="">
+                            </div>
+                            <div class="col-md-6 col-12 deniz mt-5">
+                                <p class="mt-1" style="font-size: larger;">Su altı gürültü ölçümleri özel olarak tasarlanmış hidrofonlar kullanılarak gerçekleştirilmektedir. Su taşıma zamanlarının etiketlenmesi, deniz türlerinin tespiti ve su altı gürültü haritalarının çıkarılması gibi işlemler yapılmaktadır. TÜBİTAK'ın 'Türk Boğazlar Sistemi'ndeki Su Altı Bölümlerinin Analizi ve Modelleme' başlıklı projesi, İstanbul Üniversitesi'nin Deniz Bilimleri ve Yönetimi Enstitüsü, Fiziksel Okyanografi ve Deniz Biyolojisi Anabilim Dalı ile iş birliği içinde yürütülmektedir
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content" id="tarimda">
+                    <div class="container">
+                        <p class=" d-flex justify-content-center baslik">Tarım</p>
+                        <div class="row">
+                            <div class="col-sm-6 mt-3">
+                                <img src="media/ari_img/tarimr.jpeg"  class="ms-4 mt-4 rounded-3 sinyaltarim " alt="">
+                            </div>
+                            <div class="col-sm-6 mt-5">
+                                <p class="mt-1" style="font-size: larger;">Bu proje, EPICS (Engineering Projects in Community Service) IEEE programının bir parçasıdır. Bu projede, Batı Türkiye'deki bir zeytinlikte 1000 zeytin ağacını ve meyvelerini izlemeyi ve çiftçilere ağaçlarının durumunu sürekli olarak bildiren bir erken uyarı sistemi kurmayı öneriyoruz. Ayrıca, hasatlarının olası sonuçlarını tahmin ederek düşük verim veya düşük kaliteli meyve oluşumunu önlemek için alınması gereken önlemler konusunda çiftçilere tavsiyelerde bulunmayı hedefliyoruz.
+                                </p>
+                                <button type="button" class="btn btn-outline-success"><a style="text-decoration: none; color: green;" onmouseover="this.style.color='white';" 
+       onmouseout="this.style.color='green';" href="/agac_index/">İncele</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <p class="iletisim"id="iletisim">İLETİŞİM</p>
+                    <div class="yy d-flex mt-5 fs-5">
+                        <i class="bi bi-geo-alt"></i>
+                        <p class="ms-3">Maslak, Prof. B. Karafakıoğlu Cd No:116, 34485 Sarıyer/İstanbul</p>
+                    </div>
+                    <div class="yy d-flex fs-5 mt-2">
+                        <i class="bi bi-envelope"></i>
+                        <p class="ms-3">info@ariarge.com</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <p><iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3006.4420057083003!2d29.01642278645737!3d41.103036881661524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5dcc90bb085%3A0x3bdcdabdc3beaa5c!2zxLBUw5wgQVJJIDggVEVLTk9LRU5U!5e0!3m2!1str!2str!4v1698406284845!5m2!1str!2str"
+                             style="border:0; margin-top: 10px; margin-left: 60px;"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
+                </div>
+            </div>
+            <hr class="cizgi2">
+            <div class="row">
+                <p>Arı İleri Teknolojik Ürünler Arge Mühendislik San. ve Tic. A.Ş</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        function degistir(divId) {
+            document.querySelectorAll(".content").forEach(div => {
+                div.style.display = "none";
+            });
+
+            const targetDiv = document.getElementById(divId)
+            targetDiv.style.display = "block";
+
+            targetDiv.style.animation = "slideIn 0.9s linear"
+        }
+
+    </script>
+{% endblock %}

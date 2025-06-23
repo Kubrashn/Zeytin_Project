@@ -1,0 +1,102 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+<title>Ağaç Detayı</title>
+{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock css %}
+
+{% block header %}
+<header class="header header-detay">
+  <video autoplay muted loop class="header-video">
+      <source src="/media/resimler/Untitled video - Made with Clipchamp (3).mp4" type="video/mp4">
+      Your browser does not support the video tag.
+  </video>
+  {% include "includes/_navbar.html" %}
+</header>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    <h5 class="mt-5" style="font-size: x-large; font-weight: 700;">id: {{ agac.id }}</h5>
+    <div class="row">
+        <div class="col-5 mt-3">
+            {% if agac.aimage %}
+            <img src="{{ agac.aimage.url }}" alt="Ağaç Resmi" class="img-thumbnail detayimg" >
+            {% else %}
+            <img src="{% static 'img/default_tree.jpg' %}" alt="Varsayılan Ağaç Resmi" class="img-thumbnail" width="100">
+            {% endif %}
+        </div>
+        <div class="col-6 ms-4 mt-5">
+            <a href="" class="btn btn-outline-success ms-3 mt-5">Haritada Görüntüle</a>
+        </div>
+    </div>
+    <hr>
+    <h5 class="mt-5"  style="font-size: x-large; font-weight: 700;">Özellikleri</h5>
+    <div class="row">
+        <div class="col-6 mt-4">
+            <p>{{ agac.ozellik }}</p>
+        </div>
+    </div>
+    <hr>
+    <h5 class="mt-5"  style="font-size: x-large; font-weight: 700;">Önerilen</h5>
+    <div class="row">
+        <div class="col-6 mt-4">
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos animi, doloremque veniam aut ea in eum inventore repellendus modi dolorem aspernatur quod, adipisci dolores aliquid quas ab nam, incidunt voluptas.</p>
+        </div>
+    </div>
+    <hr>
+    <h5 class="mt-5" style="font-size: x-large; font-weight: 700;">Hyperspectral Images</h5>
+<div class="row mt-5">
+    <div class="col-4">
+        {% if agac.termal %}
+        <img src="{{ agac.termal.url }}" class="detayter" alt="">
+        {% else %}
+        <img src="{% static 'path_to_default_image.jpg' %}" alt="Varsayılan Resim">
+        {% endif %}
+    </div>
+    <div class="col-4">
+        {% if agac.termal %}
+        <img src="{{ agac.termal.url }}" class="detayter" alt="">
+        {% else %}
+        <img src="{% static 'path_to_default_image.jpg' %}" alt="Varsayılan Resim">
+        {% endif %}
+    </div>
+    <div class="col-4">
+        {% if agac.termal %}
+        <img src="{{ agac.termal.url }}" class="detayter" alt="">
+        {% else %}
+        <img src="{% static 'path_to_default_image.jpg' %}" alt="Varsayılan Resim">
+        {% endif %}
+    </div>
+</div>
+<hr class="mt-5">
+<h5 class="mt-5" style="font-size: x-large; font-weight: 700;">Thermal Images</h5>
+<div class="row mt-5">
+    {% for termal in termal_goruntuler %}
+    <div class="col-4">
+        <img src="{{ termal.termal_image.url }}" class="detayter" alt="Thermal Image">
+    </div>
+    {% empty %}
+    <p>No thermal images available.</p>
+    {% endfor %}
+</div>
+
+<hr class="mt-5">
+
+<h5 class="mt-5" style="font-size: x-large; font-weight: 700;">Optic Images</h5>
+<div class="row mt-5">
+    {% for optik in optik_goruntuler %}
+    <div class="col-4">
+        <img src="{{ optik.optik_image.url }}" class="detayter" alt="Optic Image">
+    </div>
+    {% empty %}
+    <p>No optic images available.</p>
+    {% endfor %}
+</div>
+
+</div>
+{% endblock content %}
+{% include "includes/_footer.html" %} 

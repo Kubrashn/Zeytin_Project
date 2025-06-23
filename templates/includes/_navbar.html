@@ -1,0 +1,65 @@
+<!-- templates/includes/_navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/" style="margin-left: 5px; opacity: 0.9; text-shadow: 7px 7px 7px black; font-size: larger; font-weight: 500;">Anasayfa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(0, 0, 0); font-size: larger; font-weight: 500;" class="nav-link" aria-current="page" href="{% url 'index' %}">Projemiz</a>
+                </li>
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(0, 0, 0); font-size: larger; font-weight: 500;" class="nav-link" aria-current="page" href="{% url 'map' %}">Harita</a>
+                </li>
+                <!-- Arisarge'nin herkese açık profili -->
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(0, 0, 0); font-size: larger; font-weight: 500;" class="nav-link" href="{% url 'profile' arisarge_profile_id %}">Arisarge Profili</a>
+                </li>
+                <li class="nav-item">
+                    <a style="opacity: 0.9; text-shadow: 9px 9px 9px rgb(0, 0, 0); font-size: larger; font-weight: 500;" class="nav-link" href="{% url 'tanıtım' %}">Zeytin Hasadı</a>
+                </li>
+            </ul>
+            <!-- Kullanıcı giriş yapmışsa -->
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"> {{ request.user.username }}</i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'profile' request.user.profile.id %}"><b>{{ request.user.username }}</b></a>
+                        <a class="dropdown-item" href="/logout/">Çıkış Yap</a>
+                    </div>
+                </li>
+            </ul>
+            {% else %}
+            <!-- Kullanıcı giriş yapmamışsa -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/login/">Giriş Yap</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login/">Kayıt Ol</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+
+
+<style>
+    .ilk {
+        margin-left: 14px ;
+    }
+    .navbar-nav li a:hover{
+        color: rgb(18, 228, 176);
+    }
+    .navbar-toggler{
+        background-color: white;
+        
+    }
+</style>
